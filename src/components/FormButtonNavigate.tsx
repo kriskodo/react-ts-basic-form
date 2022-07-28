@@ -1,4 +1,3 @@
-import { FormEvent, MouseEvent } from "react"
 import { Button } from "react-bootstrap"
 
 export function FormButtonNavigate(props: { value: string, canMove: boolean, handleNavigate: () => void }) {

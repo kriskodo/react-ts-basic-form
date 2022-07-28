@@ -40,13 +40,4 @@ export class Validator {
             isValid: (input) => regexEmail.test(input as string)
         }
     }
-
-    static CreditCard(): ErrorType {
-        const regexCreditCard = /^(?:5[1-5][0-9]{14})$/;
-
-        return {
-            message: "Please put a valid credit card number",
-            isValid: (input) => regexCreditCard.test(input as string)
-        }
-    }
 }

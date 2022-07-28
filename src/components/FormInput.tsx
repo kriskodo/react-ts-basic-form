@@ -35,7 +35,8 @@ export function FormInput(props: { state: FormInputFieldInfo, handleInput: any }
                             name={label}
                             type={type}
                             value={value}
-                            onChange={(e) => handleInput(e, label, handleValidation(e))}
+                            onChange={(e) => handleInput(e, label)}
+                            onBlur={(e) => handleValidation(e)}
                             placeholder={label}
                             aria-label={label}
                             aria-describedby={value.toString()}

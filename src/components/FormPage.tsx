@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormProps } from "../types/FormTypes";
 import { FormButtonSubmit } from "./FormButtonSubmit";
 import { FormButtonNavigate } from "./FormButtonNavigate";
@@ -8,11 +8,7 @@ import { FormInput } from "./FormInput";
 export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, currentPage, setCurrentPage }) => {
     const [canMoveForward, setCanMoveForward] = useState(false);
 
-    useEffect(() => {
-        handleMoveForward();
-    }, [data])
-
-    const handleMoveForward = () => {
+    const handleMoveForward = useCallback(() => {
         const errors = [];
 
         data.forEach(f => f.validations?.forEach(v => {
@@ -23,10 +19,14 @@ export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, 
 
         setCanMoveForward(false);
 
-        if (errors.length == 0) {
+        if (errors.length === 0) {
             setCanMoveForward(true);
         }
-    }
+    }, [data])
+
+    useEffect(() => {
+        handleMoveForward();
+    }, [data, handleMoveForward])
 
     const handleNavigate = (isBackwards?: boolean) => {
         if (isBackwards && setCurrentPage && page) {

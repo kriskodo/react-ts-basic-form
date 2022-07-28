@@ -16,7 +16,7 @@ function App() {
     {
       label: "Age",
       type: "number",
-      value: 0,
+      value: "",
       validations: [Validator.Required(), Validator.AgeBetween(12, 70)]
     },
     {
@@ -35,7 +35,7 @@ function App() {
       label: "Credit Card Number",
       type: "number",
       value: "",
-      validations: [Validator.Required(), Validator.CreditCard()]
+      validations: [Validator.Required(), Validator.MinLength(5), Validator.MaxLength(10)]
     },
     {
       label: "Security Code",

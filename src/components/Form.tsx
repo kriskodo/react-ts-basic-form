@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { FormInputFieldInfo, FormProps } from "../types/FormTypes";
-import { FormInput } from "./FormInput";
-import { FormPage } from "./FormPage";
-import * as BootstrapForm from "react-bootstrap/Form";
+import React from "react";
+import { FormProps } from "../types/FormTypes";
+import * as bootstrapForm from "react-bootstrap/Form";
 
 export const Form: React.FC<FormProps> = ({ data, children }) => {
 
@@ -12,7 +10,7 @@ export const Form: React.FC<FormProps> = ({ data, children }) => {
     }
 
     return (
-        <BootstrapForm.default
+        <bootstrapForm.default
             onSubmit={(e) => handleSubmit(e)} style={{
                 height: "100vh",
                 display: "flex",
@@ -25,6 +23,6 @@ export const Form: React.FC<FormProps> = ({ data, children }) => {
                     return c;
                 })}
             </>
-        </BootstrapForm.default>
+        </bootstrapForm.default>
     )
 }
