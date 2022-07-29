@@ -9,11 +9,11 @@ export type FormInputFieldInfo = {
 }
 
 export type FormProps = {
+    children: React.ReactNode[],
+}
+
+export type FormPageProps = {
     data: FormInputFieldInfo[],
-    title?: string,
-    children?: React.ReactNode[],
-    handleInput(e: any, label: any): any,
-    page?: number,
-    currentPage?: number,
-    setCurrentPage?: (x: number) => void
+    title: string,
+    page: number
 }

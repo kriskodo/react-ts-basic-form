@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import { Form } from './components/Form';
 import { FormPage } from './components/FormPage';
+import FormContext from './context/formContext';
 import { FormInputFieldInfo } from './types/FormTypes';
 import { Validator } from "./utils/Validator";
 
@@ -57,35 +58,34 @@ function App() {
     })
   }
 
+  const context = {
+    fields,
+    currentPage,
+    setCurrentPage: (page: number) => setCurrentPage(page),
+    handleInput: (e: any, label: string) => handleInput(e, label)
+  }
+
   return (
     <div className="App">
-      <Form
-        data={fields}
-        handleInput={(e, label) => handleInput(e, label)}
-      >
-        <FormPage
-          data={fields.slice(0, 2)}
-          page={1}
-          title="Basic information"
-          currentPage={currentPage}
-          setCurrentPage={(page) => setCurrentPage(page)}
-          handleInput={(e, label) => handleInput(e, label)}
-        />
-        <FormPage
-          data={fields.slice(2, 4)}
-          page={2}
-          title="Additional information"
-          currentPage={currentPage}
-          setCurrentPage={(page) => setCurrentPage(page)}
-          handleInput={(e, label) => handleInput(e, label)} />
-        <FormPage
-          data={fields.slice(4)}
-          page={3}
-          title="Just making sure you are at least 18 years old. No charges."
-          currentPage={currentPage}
-          setCurrentPage={(page) => setCurrentPage(page)}
-          handleInput={(e, label) => handleInput(e, label)} />
-      </Form>
+      <FormContext.Provider value={context}>
+        <Form>
+          <FormPage
+            data={fields.slice(0, 2)}
+            title="Basic information"
+            page={1}
+          />
+          <FormPage
+            data={fields.slice(2, 4)}
+            title="Additional information"
+            page={2}
+          />
+          <FormPage
+            data={fields.slice(4)}
+            title="Just making sure you are at least 18 years old. No charges."
+            page={3}
+          />
+        </Form>
+      </FormContext.Provider>
     </div>
   );
 }

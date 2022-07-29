@@ -1,12 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
-import { FormProps } from "../types/FormTypes";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { FormPageProps, FormProps } from "../types/FormTypes";
 import { FormButtonSubmit } from "./FormButtonSubmit";
 import { FormButtonNavigate } from "./FormButtonNavigate";
 import { FormInput } from "./FormInput";
+import FormContext from "../context/formContext";
 
 
-export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, currentPage, setCurrentPage }) => {
+export const FormPage: React.FC<FormPageProps> = ({ data, title, page }) => {
     const [canMoveForward, setCanMoveForward] = useState(false);
+    const context = useContext(FormContext);
 
     const handleMoveForward = useCallback(() => {
         const errors = [];
@@ -29,18 +31,18 @@ export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, 
     }, [data, handleMoveForward])
 
     const handleNavigate = (isBackwards?: boolean) => {
-        if (isBackwards && setCurrentPage && page) {
-            setCurrentPage(page - 1);
+        if (isBackwards && page) {
+            context?.setCurrentPage(page - 1);
             return;
         }
-        if (canMoveForward && setCurrentPage && page) {
-            setCurrentPage(page + 1);
+        if (canMoveForward && page) {
+            context?.setCurrentPage(page + 1);
         }
     }
 
     return (
         <div>
-            {page === currentPage && (
+            {page === context?.currentPage && (
                 <>
                     <h2 style={{ textAlign: "center" }}>{title}</h2>
 
@@ -48,7 +50,7 @@ export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, 
                         <FormInput
                             key={idx}
                             state={f}
-                            handleInput={(e: any, label: string) => handleInput(e, label)}
+                            handleInput={(e: any, label: string) => context?.handleInput(e, label)}
                         />
                     ))}
                     <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
