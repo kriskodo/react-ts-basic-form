@@ -2,7 +2,7 @@ import { Alert, FloatingLabel, Form } from "react-bootstrap";
 import { useValidation } from "../hooks/useValidation";
 import { FormInputFieldInfo } from "../types/FormTypes";
 
-export function FormInput(props: { state: FormInputFieldInfo, handleInput: any }) {
+export function FormInput(props: { state: FormInputFieldInfo, handleInput: (e: React.ChangeEvent, label: string) => void }) {
     const { error, handleValidation } = useValidation("", props.state?.validations);
 
     const { label, type, value } = props.state;

@@ -1,6 +1,12 @@
 import { ErrorType } from "../utils/Validator"
 
-export type FormInputFieldInfo = {
+export interface FormProps {
+    allInputFields: FormInputFieldInfo[],
+    pages: number,
+    children?: Array<React.ReactNode>,
+}
+
+export interface FormInputFieldInfo {
     label: string,
     type: string,
     value: string | number,
@@ -8,12 +14,10 @@ export type FormInputFieldInfo = {
     options?: string[]
 }
 
-export type FormProps = {
-    children: React.ReactNode[],
-}
 
-export type FormPageProps = {
-    data: FormInputFieldInfo[],
+export interface FormPageProps {
+    inputsRange: [number, number?],
+    data?: FormInputFieldInfo[],
     title: string,
     page: number
 }

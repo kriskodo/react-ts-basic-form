@@ -1,23 +1,12 @@
-import React, { createContext } from 'react';
-import { ErrorType } from '../utils/Validator';
+import React from 'react';
+import { FormInputFieldInfo } from '../types/FormTypes';
 
 interface AppContextInterface {
-    fields: ({
-        label: string;
-        type: string;
-        value: string;
-        validations: ErrorType[];
-        options?: undefined;
-    } | {
-        label: string;
-        type: string;
-        value: string;
-        options: string[];
-        validations?: undefined;
-    })[];
+    fields: FormInputFieldInfo[];
     currentPage: number;
     setCurrentPage: (page: number) => void;
     handleInput: (e: any, label: string) => void;
+    pages: number,
 }
 
 const FormContext = React.createContext<AppContextInterface | null>(null);

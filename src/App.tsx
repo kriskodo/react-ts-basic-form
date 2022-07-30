@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import './App.css';
 import { Form } from './components/Form';
 import { FormPage } from './components/FormPage';
-import FormContext from './context/formContext';
-import { FormInputFieldInfo } from './types/FormTypes';
 import { Validator } from "./utils/Validator";
 
 function App() {
-  const initData = [
+  const allInputFields = [
     {
       label: "Name",
       type: "input",
@@ -46,46 +43,25 @@ function App() {
     }
   ];
 
-  const [fields, setFields] = useState(initData);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleInput = (e: any, label: string) => {
-    setFields((prevState) => {
-      const copyPrevState = [...prevState];
-      const field = copyPrevState.find(f => f.label === label) as FormInputFieldInfo;
-      field.value = e.target.value;
-      return copyPrevState;
-    })
-  }
-
-  const context = {
-    fields,
-    currentPage,
-    setCurrentPage: (page: number) => setCurrentPage(page),
-    handleInput: (e: any, label: string) => handleInput(e, label)
-  }
-
   return (
     <div className="App">
-      <FormContext.Provider value={context}>
-        <Form>
-          <FormPage
-            data={fields.slice(0, 2)}
-            title="Basic information"
-            page={1}
-          />
-          <FormPage
-            data={fields.slice(2, 4)}
-            title="Additional information"
-            page={2}
-          />
-          <FormPage
-            data={fields.slice(4)}
-            title="Just making sure you are at least 18 years old. No charges."
-            page={3}
-          />
-        </Form>
-      </FormContext.Provider>
+      <Form allInputFields={allInputFields} pages={3}>
+        <FormPage
+          page={1}
+          inputsRange={[0, 2]}
+          title="Basic information"
+        />
+        <FormPage
+          page={2}
+          inputsRange={[2, 4]}
+          title="Additional information"
+        />
+        <FormPage
+          page={3}
+          inputsRange={[4]}
+          title="Just making sure you are at least 18 years old. No charges."
+        />
+      </Form>
     </div>
   );
 }

@@ -1,13 +1,33 @@
-import React, { useContext } from "react";
-import { FormProps } from "../types/FormTypes";
+import React, { useState } from "react";
+import { FormInputFieldInfo, FormProps } from "../types/FormTypes";
 import * as bootstrapForm from "react-bootstrap/Form";
 import FormContext from "../context/formContext";
 
-export const Form: React.FC<FormProps> = ({ children }): JSX.Element => {
-    const context = useContext(FormContext);
+export const Form: React.FC<FormProps> = ({ allInputFields, pages, children }): JSX.Element => {
+    const [fields, setFields] = useState(allInputFields);
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+
+    const handleInput = (e: any, label: string) => {
+        setFields((prevState) => {
+            const copyPrevState = [...prevState];
+            const field = copyPrevState.find(f => f.label === label) as FormInputFieldInfo;
+            field.value = e.target.value;
+            return copyPrevState;
+        })
+    }
+
+    const contextData = {
+        fields: fields,
+        currentPage,
+        setCurrentPage: (page: number) => setCurrentPage(page),
+        handleInput: (e: any, label: string) => handleInput(e, label)
+    }
+
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        console.log(context?.fields);
+        console.log(fields);
         e.preventDefault();
     }
 
@@ -21,9 +41,13 @@ export const Form: React.FC<FormProps> = ({ children }): JSX.Element => {
             }}
         >
             <>
-                {children?.map((c, idx) => {
-                    return c;
-                })}
+                <FormContext.Provider value={{ ...contextData, pages }}>
+                    <>
+                        {children?.map((c, idx) => {
+                            return c;
+                        })}
+                    </>
+                </FormContext.Provider>
             </>
         </bootstrapForm.default>
     )
