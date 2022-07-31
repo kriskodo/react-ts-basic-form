@@ -15,7 +15,7 @@ export const FormPage: React.FC<FormPageProps> = ({ inputsRange, title, page }) 
         const errors = [];
 
         data?.forEach(f => f.validations?.forEach(v => {
-            if (!v.isValid(f.value)) {
+            if (!v.isValid(f.checked !== undefined ? f.checked : f.value)) {
                 errors.push(v.message);
             }
         }))

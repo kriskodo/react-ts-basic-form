@@ -11,7 +11,8 @@ export interface FormInputFieldInfo {
     type: string,
     value: string | number,
     validations?: ErrorType[],
-    options?: string[]
+    options?: string[],
+    checked?: boolean
 }
 
 

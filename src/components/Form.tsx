@@ -7,13 +7,15 @@ export const Form: React.FC<FormProps> = ({ allInputFields, pages, children }): 
     const [fields, setFields] = useState(allInputFields);
     const [currentPage, setCurrentPage] = useState(1);
 
-
-
     const handleInput = (e: any, label: string) => {
         setFields((prevState) => {
             const copyPrevState = [...prevState];
             const field = copyPrevState.find(f => f.label === label) as FormInputFieldInfo;
-            field.value = e.target.value;
+            
+            e.target.value === "checkbox"
+                ? field.checked = !field.checked
+                : field.value = e.target.value;
+                
             return copyPrevState;
         })
     }
@@ -33,7 +35,7 @@ export const Form: React.FC<FormProps> = ({ allInputFields, pages, children }): 
 
     return (
         <bootstrapForm.default
-            onSubmit={(e) => handleSubmit(e)} style={{
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)} style={{
                 height: "100vh",
                 display: "flex",
                 justifyContent: "center",

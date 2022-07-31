@@ -1,6 +1,6 @@
 export type ErrorType = {
     message: string,
-    isValid(x: number | string): boolean;
+    isValid(x: number | string | boolean): boolean;
 }
 
 export class Validator {
@@ -38,6 +38,13 @@ export class Validator {
         return {
             message: "Please enter a valid email address.",
             isValid: (input) => regexEmail.test(input as string)
+        }
+    }
+
+    static CheckboxRequired(): ErrorType {
+        return {
+            message: "Required.",
+            isValid: (checked) => !!checked
         }
     }
 }

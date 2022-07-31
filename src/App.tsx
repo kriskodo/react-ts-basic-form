@@ -26,7 +26,7 @@ function App() {
     {
       label: "Proffession",
       type: "select",
-      value: "",
+      value: "Web developer",
       options: ["Web developer", "DevOPS", "Customer Specialist", "HR", "Construction worker"]
     },
     {
@@ -40,6 +40,19 @@ function App() {
       type: "input",
       value: "",
       validations: [Validator.Required(), Validator.MinLength(3), Validator.MaxLength(3)]
+    },
+    {
+      label: "Tell us about yourself",
+      type: "textarea",
+      value: "",
+      validations: [Validator.Required(), Validator.MinLength(5), Validator.MaxLength(500)]
+    },
+    {
+      label: "Agree to the terms of service.",
+      type: "checkbox",
+      value: "checkbox",
+      checked: false,
+      validations: [Validator.CheckboxRequired()]
     }
   ];
 
