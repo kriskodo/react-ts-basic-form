@@ -10,8 +10,10 @@ export const Form: React.FC<FormProps> = ({ allInputFields, pages, children }): 
     const handleInput = (e: any, label: string) => {
         setFields((prevState) => {
             const copyPrevState = [...prevState];
-            const field = copyPrevState.find(f => f.label === label) as FormInputFieldInfo;
+            const field = copyPrevState.find(f => f.label === label);
             
+            if(typeof field === "undefined") throw new Error("Input was not declared in the context.");
+
             e.target.value === "checkbox"
                 ? field.checked = !field.checked
                 : field.value = e.target.value;
