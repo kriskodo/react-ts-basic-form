@@ -37,7 +37,7 @@ export class Validator {
 
         return {
             message: "Please enter a valid email address.",
-            isValid: (input) => regexEmail.test(input as string)
+            isValid: (input) => regexEmail.test(input.toString())
         }
     }
 
