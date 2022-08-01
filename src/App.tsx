@@ -1,27 +1,29 @@
 import './App.css';
 import { Form } from './components/Form';
 import { FormPage } from './components/FormPage';
-import { Validator } from "./utils/Validator";
+import { ErrorType, IValidator, Validator } from "./utils/Validator";
 
 function App() {
+  const validator = new Validator();
+
   const allInputFields = [
     {
       label: "Name",
       type: "input",
       value: "",
-      validations: [Validator.Required(), Validator.MinLength(2), Validator.MaxLength(50)]
+      validations: [validator.Required(), validator.MinLength(2), validator.MaxLength(50)]
     },
     {
       label: "Age",
       type: "number",
       value: "",
-      validations: [Validator.Required(), Validator.AgeBetween(12, 70)]
+      validations: [validator.Required(), validator.AgeBetween(12, 70)]
     },
     {
       label: "Email",
       type: "email",
       value: "",
-      validations: [Validator.Required(), Validator.Email()]
+      validations: [validator.Required(), validator.Email()]
     },
     {
       label: "Proffession",
@@ -33,26 +35,26 @@ function App() {
       label: "Credit Card Number",
       type: "number",
       value: "",
-      validations: [Validator.Required(), Validator.MinLength(5), Validator.MaxLength(10)]
+      validations: [validator.Required(), validator.MinLength(5), validator.MaxLength(10)]
     },
     {
       label: "Security Code",
       type: "input",
       value: "",
-      validations: [Validator.Required(), Validator.MinLength(3), Validator.MaxLength(3)]
+      validations: [validator.Required(), validator.MinLength(3), validator.MaxLength(3)]
     },
     {
       label: "Tell us about yourself",
       type: "textarea",
       value: "",
-      validations: [Validator.Required(), Validator.MinLength(5), Validator.MaxLength(500)]
+      validations: [validator.Required(), validator.MinLength(5), validator.MaxLength(500)]
     },
     {
       label: "Agree to the terms of service.",
       type: "checkbox",
       value: "checkbox",
       checked: false,
-      validations: [Validator.CheckboxRequired()]
+      validations: [validator.CheckboxRequired()]
     }
   ];
 
