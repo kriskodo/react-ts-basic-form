@@ -1,18 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
-import { FormProps } from "../types/FormTypes";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { FormPageProps } from "../types/FormTypes";
 import { FormButtonSubmit } from "./FormButtonSubmit";
 import { FormButtonNavigate } from "./FormButtonNavigate";
 import { FormInput } from "./FormInput";
+import FormContext from "../context/formContext";
 
 
-export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, currentPage, setCurrentPage }) => {
+export const FormPage: React.FC<FormPageProps> = ({ inputsRange, title, page }) => {
     const [canMoveForward, setCanMoveForward] = useState(false);
+    const context = useContext(FormContext);
+    const data = context?.fields.slice(inputsRange[0], inputsRange[1]);
 
     const handleMoveForward = useCallback(() => {
         const errors = [];
 
-        data.forEach(f => f.validations?.forEach(v => {
-            if (!v.isValid(f.value)) {
+        data?.forEach(f => f.validations?.forEach(v => {
+            if (!v.isValid(f.checked !== undefined ? f.checked : f.value)) {
                 errors.push(v.message);
             }
         }))
@@ -29,41 +32,46 @@ export const FormPage: React.FC<FormProps> = ({ data, title, handleInput, page, 
     }, [data, handleMoveForward])
 
     const handleNavigate = (isBackwards?: boolean) => {
-        if (isBackwards && setCurrentPage && page) {
-            setCurrentPage(page - 1);
+        if (isBackwards && page) {
+            context?.setCurrentPage(page - 1);
             return;
         }
-        if (canMoveForward && setCurrentPage && page) {
-            setCurrentPage(page + 1);
+        if (canMoveForward && page) {
+            context?.setCurrentPage(page + 1);
         }
     }
 
     return (
         <div>
-            {page === currentPage && (
+            {page === context?.currentPage && (
                 <>
                     <h2 style={{ textAlign: "center" }}>{title}</h2>
 
-                    {data.map((f, idx) => (
+                    {data?.map((f, idx) => (
                         <FormInput
                             key={idx}
                             state={f}
-                            handleInput={(e: any, label: string) => handleInput(e, label)}
+                            handleInput={(e: any, label: string) => context?.handleInput(e, label)}
                         />
                     ))}
+
                     <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
-                        {page === 1 && (
+                        {context?.pages === 1 && (
+                            <FormButtonSubmit value={"Submit"} canSubmit={canMoveForward} />
+                        )}
+
+                        {page === 1 && context?.pages > 1 && (
                             <FormButtonNavigate value={"Next"} canMove={canMoveForward} handleNavigate={() => handleNavigate()} />
                         )}
 
-                        {page && page > 1 && page < 3 && (
+                        {page > 1 && page < context?.pages && (
                             <>
                                 <FormButtonNavigate value={"Back"} canMove={true} handleNavigate={() => handleNavigate(true)} />
                                 <FormButtonNavigate value={"Next"} canMove={canMoveForward} handleNavigate={() => handleNavigate()} />
                             </>
                         )}
 
-                        {page && page === 3 && (
+                        {page > 1 && page === context.pages && (
                             <>
                                 <FormButtonNavigate value={"Back"} canMove={true} handleNavigate={() => handleNavigate(true)} />
                                 <FormButtonSubmit value={"Submit"} canSubmit={canMoveForward} />

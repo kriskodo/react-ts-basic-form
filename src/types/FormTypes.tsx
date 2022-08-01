@@ -1,19 +1,24 @@
 import { ErrorType } from "../utils/Validator"
 
-export type FormInputFieldInfo = {
+export interface FormProps {
+    allInputFields: FormInputFieldInfo[],
+    pages: number,
+    children?: Array<React.ReactNode>,
+}
+
+export interface FormInputFieldInfo {
     label: string,
     type: string,
     value: string | number,
     validations?: ErrorType[],
-    options?: string[]
+    options?: string[],
+    checked?: boolean
 }
 
-export type FormProps = {
-    data: FormInputFieldInfo[],
-    title?: string,
-    children?: React.ReactNode[],
-    handleInput(e: any, label: any): any,
-    page?: number,
-    currentPage?: number,
-    setCurrentPage?: (x: number) => void
+
+export interface FormPageProps {
+    inputsRange: [number, number?],
+    data?: FormInputFieldInfo[],
+    title: string,
+    page: number
 }
