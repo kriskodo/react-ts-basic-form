@@ -10,7 +10,7 @@ export interface FormInputFieldInfo {
     label: string,
     type: string,
     value: string | number,
-    validations?: ErrorType[],
+    validations?: ErrorType<string | number | boolean>[],
     options?: string[],
     checked?: boolean
 }

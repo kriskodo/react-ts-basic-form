@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FormInputFieldInfo, FormProps } from "../types/FormTypes";
+import { FormProps } from "../types/FormTypes";
 import * as bootstrapForm from "react-bootstrap/Form";
 import FormContext from "../context/formContext";
 
@@ -31,7 +31,6 @@ export const Form: React.FC<FormProps> = ({ allInputFields, pages, children }): 
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        console.log(fields);
         e.preventDefault();
     }
 

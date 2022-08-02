@@ -1,54 +1,54 @@
-export type ErrorType = {
+export type ErrorType<T> = {
     message: string,
-    isValid(x: number | string | boolean): boolean;
+    isValid(x: T): boolean;
 }
 
 export interface IValidator {
-    Required(args?: any): ErrorType
+    Required(args?: any): ErrorType<string>
 } 
 
 export class Validator implements IValidator {
-    Required(): ErrorType {
+    Required(): ErrorType<string> {
         return {
             message: "The field is required.",
-            isValid: (x) => x.toString().length > 0
+            isValid: (x) => x.length > 0
         };
     }
 
-    MinLength(length: number): ErrorType {
+    MinLength(length: number): ErrorType<string> {
         return {
             message: "The field cannot be less than " + length + " symbols",
-            isValid: (x) => x.toString().length >= length
+            isValid: (x) => x.length >= length
         };
     }
 
-    MaxLength(length: number): ErrorType {
+    MaxLength(length: number): ErrorType<string> {
         return {
             message: "The field cannot be more than " + length + " symbols",
-            isValid: (x) => x.toString().length <= length
+            isValid: (x) => x.length <= length
         };
     }
 
-    AgeBetween(min: number, max: number): ErrorType {
+    AgeBetween(min: number, max: number): ErrorType<number> {
         return {
             message: "Age must be between " + min + " and " + max,
             isValid: (x) => +x >= min && +x <= max
         }
     }
 
-    Email(): ErrorType {
+    Email(): ErrorType<string> {
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
 
         return {
             message: "Please enter a valid email address.",
-            isValid: (input) => regexEmail.test(input.toString())
+            isValid: (input) => regexEmail.test(input)
         }
     }
 
-    CheckboxRequired(): ErrorType {
+    CheckboxRequired(): ErrorType<boolean> {
         return {
             message: "Required.",
-            isValid: (checked) => !!checked
+            isValid: (checked) => checked
         }
     }
 }
