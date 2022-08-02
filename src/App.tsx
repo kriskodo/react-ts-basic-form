@@ -1,7 +1,7 @@
 import './App.css';
 import { Form } from './components/Form';
 import { FormPage } from './components/FormPage';
-import { ErrorType, IValidator, Validator } from "./utils/Validator";
+import { Validator } from "./utils/Validator";
 
 function App() {
   const validator = new Validator();
