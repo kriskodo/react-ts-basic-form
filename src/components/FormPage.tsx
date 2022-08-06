@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FormPageProps } from "../types/FormTypes";
 import { FormButtonSubmit } from "./FormButtonSubmit";
 import { FormButtonNavigate } from "./FormButtonNavigate";
@@ -14,8 +14,8 @@ export const FormPage: React.FC<FormPageProps> = ({ inputsRange, title, page }) 
     const handleMoveForward = useCallback(() => {
         const errors = [];
 
-        data?.forEach(f => f.validations?.forEach(v => {
-            if (!v.isValid(f.checked !== undefined ? f.checked : f.value)) {
+        data?.forEach(field => field.validations?.forEach(v => {
+            if (!v.isValid(field.checked !== undefined ? field.checked : field.value)) {
                 errors.push(v.message);
             }
         }))
@@ -47,10 +47,10 @@ export const FormPage: React.FC<FormPageProps> = ({ inputsRange, title, page }) 
                 <>
                     <h2 style={{ textAlign: "center" }}>{title}</h2>
 
-                    {data?.map((f, idx) => (
+                    {data?.map((field, idx) => (
                         <FormInput
                             key={idx}
-                            state={f}
+                            state={field}
                             handleInput={(e: any, label: string) => context?.handleInput(e, label)}
                         />
                     ))}

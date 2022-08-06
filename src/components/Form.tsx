@@ -31,6 +31,7 @@ export const Form: React.FC<FormProps> = ({ allInputFields, pages, children }): 
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        console.log(fields);
         e.preventDefault();
     }
 

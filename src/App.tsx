@@ -5,6 +5,12 @@ import { Validator } from "./utils/Validator";
 
 const validator = new Validator();
 
+/**
+ *  allInputFields: [
+ *    {title, inputFields: []}[]
+ *  ]
+ *
+ */
 export const allInputFields = [
   {
     label: "Name",

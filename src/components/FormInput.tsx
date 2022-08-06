@@ -1,7 +1,8 @@
-import { ChangeEvent } from "react";
-import { Alert, FloatingLabel, Form, Row } from "react-bootstrap";
+import React, { ChangeEvent } from "react";
+import { Alert, FloatingLabel, Form } from "react-bootstrap";
 import { useValidation } from "../hooks/useValidation";
 import { FormInputFieldInfo } from "../types/FormTypes";
+import {Validator} from "../utils/Validator";
 
 const BasicFields = ["input", "email", "number", "textarea"];
 
@@ -21,7 +22,7 @@ export function FormInput(props: { state: FormInputFieldInfo, handleInput: (e: R
                     label={label}
                     value={value}
                     checked={checked}
-                    onChange={(e: ChangeEvent<Element>) => handleInput(e, label)}
+                    onChange={(e: ChangeEvent) => handleInput(e, label)}
                     onBlur={(e: any) => handleValidation(e)}
                 />
             )}
@@ -32,7 +33,7 @@ export function FormInput(props: { state: FormInputFieldInfo, handleInput: (e: R
                     label={label}
                     className="mb-3"
                 >
-                    <Form.Select value={value} onChange={(e: ChangeEvent<Element>) => handleInput(e, label)} aria-label="Default select example">
+                    <Form.Select value={value} onChange={(e: ChangeEvent) => handleInput(e, label)} aria-label="Default select example">
                         {options?.map((o, idx) => (
                             <option key={idx} value={o}>{o}</option>
                         ))}
